@@ -17,7 +17,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     environment: 
-      name: production
+      name: dev
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -55,6 +55,15 @@ jobs:
     
     - name: Deploy
       run: echo "Deploying project from ${{ github.event.repository.name }} for $PROJECT"
+
+  manual-approve:
+    needs: dev-deployment
+    environment:
+      name: approvers
+    runs-on: ubuntu-latest
+    steps:
+    - name: manual approve
+      run: echo "Manually approved"
 
   int-deployment:   
     # The type of runner that the job will run on
