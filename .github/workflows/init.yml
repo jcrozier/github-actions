@@ -1,7 +1,10 @@
 name: CICD Flow
 
-on: 
-  create
+on:
+  workflow_dispatch
+
+env:
+  Project: DVSA
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -27,4 +30,4 @@ jobs:
       run: echo "Publish artifact from ${{ github.event.repository.name }}"
 
     - name: Deploy
-      run: echo "Deploying project from ${{ github.event.repository.name }}"
+      run: echo "Deploying project from ${{ github.event.repository.name }} for $DAY_OF_WEEK"
