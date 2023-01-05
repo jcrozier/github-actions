@@ -22,7 +22,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - name: Setup
       run: echo "Setup ${{ github.event.repository.name }}"
@@ -41,17 +41,32 @@ jobs:
         name: my-artifact
         path: ./example.txt  
 
-  deployment:   
+  dev-deployment:   
     # The type of runner that the job will run on
     runs-on: ubuntu-latest  
     environment: 
-      name: production
+      name: dev
     needs: build  
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    
+    - name: Deploy
+      run: echo "Deploying project from ${{ github.event.repository.name }} for $PROJECT"
+
+  int-deployment:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest  
+    environment: 
+      name: int
+    needs: dev-deployment  
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
     
     - name: Deploy
       run: echo "Deploying project from ${{ github.event.repository.name }} for $PROJECT"
