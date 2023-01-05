@@ -12,17 +12,6 @@ on:
 env:
   PROJECT: DVSA
 
-jobs:
-  deployment:
-    runs-on: ubuntu-latest
-    environment: 
-      name: production
-      url: https://github.com
-    steps:
-      - name: deploy
-
-
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
