@@ -4,10 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       deploy_version:
-        required: true
+        required: false
         type: string
-      environment:
-        type: environment
 
 env:
   PROJECT: DVSA
