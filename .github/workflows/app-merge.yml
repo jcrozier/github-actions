@@ -10,10 +10,9 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true
     # This workflow contains a single job called "build"
-    code-linter:   
+    code-linter:
+      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
@@ -36,6 +35,7 @@ jobs:
           path: ./linter.txt  
 
     synk:   
+      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
@@ -58,6 +58,7 @@ jobs:
           path: ./synk.txt
 
     build:   
+      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
@@ -83,6 +84,7 @@ jobs:
           path: ./build-artifact.txt
 
     tag-w-sha:   
+      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
@@ -105,6 +107,7 @@ jobs:
           path: ./tagged-artifact.txt
 
     result-pr:   
+      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
@@ -116,6 +119,7 @@ jobs:
         run: echo "Result publish to PR in ${{ github.event.repository.name }}"       
 
     upload-to-s3:   
+      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
@@ -127,6 +131,7 @@ jobs:
         run: echo "Upload complete"     
 
     dev-deployment:   
+      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest  
       environment: 
@@ -142,6 +147,7 @@ jobs:
         run: echo "Deploying project from ${{ github.event.repository.name }} for $PROJECT"
 
     ws-deployment:   
+      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest  
       environment: 
