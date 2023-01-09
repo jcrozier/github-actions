@@ -25,7 +25,7 @@ jobs:
       if: ${{ inputs.env_deploy }}
       run: |
         echo "DEPLOY_ENV=${{ inputs.env_deploy }}" >> $GITHUB_ENV
-        echo $GITHUB_ENV
+        echo "${{ env.DEPLOY_ENV }}"
 
   deploy-application:   
     # The type of runner that the job will run on
