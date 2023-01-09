@@ -3,7 +3,7 @@ name: Terraform Release
 on:
   workflow_dispatch:
     inputs:
-      deploy_version:
+      tf_version:
         required: false
         type: number
 
@@ -17,6 +17,7 @@ jobs:
     uses: ./.github/workflows/terraform-env-deploy.yml
     with:
       env_deploy: dev
+      tf_deploy: true
 
   dev-qa:    
     # The type of runner that the job will run on
@@ -37,6 +38,7 @@ jobs:
     uses: ./.github/workflows/terraform-env-deploy.yml
     with:
       env_deploy: int
+      tf_deploy: true
     needs: dev-qa
 
   int-qa:    
@@ -58,6 +60,7 @@ jobs:
     uses: ./.github/workflows/terraform-env-deploy.yml
     with:
       env_deploy: preprod
+      tf_deploy: true
     needs: int-qa  
 
   preprod-qa:    
@@ -79,5 +82,6 @@ jobs:
     uses: ./.github/workflows/terraform-env-deploy.yml
     with:
       env_deploy: prod
+      tf_deploy: true
     needs: preprod-qa   
 

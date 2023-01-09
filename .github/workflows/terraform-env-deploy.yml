@@ -4,9 +4,13 @@ on:
   workflow_call:
     inputs:
       env_deploy:
-        description: List of environment variables to set up, given in env=value format.
+        description: Environment for deployment.
         required: false
         type: string  
+      tf_deploy:
+        description: Enable TF apply step.
+        required: false
+        type: boolean  
 
 env:
   PROJECT: DVSA Recalls
@@ -71,4 +75,17 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: tf-artifact
-        path: ./tf.txt              
+        path: ./tf.txt
+
+  tf-apply:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: if: ${{ inputs.tf_deploy }} 
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run Terraoform plan
+      run: echo "Applying..."   
