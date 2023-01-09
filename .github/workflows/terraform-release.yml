@@ -37,7 +37,7 @@ jobs:
     uses: ./.github/workflows/terraform-env-deploy.yml
     with:
       env_deploy: int
-    needs: dev-deployment
+    needs: dev-qa
 
   int-qa:    
     # The type of runner that the job will run on
