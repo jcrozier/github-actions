@@ -1,0 +1,58 @@
+name: Terraform PR
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+env:
+  PROJECT: DVSA Recalls
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  tf:   
+    # The type of runner that the job will run on
+    uses: ./.github/workflows/terraform-env-deploy.yml
+    with:
+      env_deploy: dev
+
+  result-pr:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: dev
+    needs: tf
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:    
+    - name: Report Result to PR
+      run: echo "Result publish to PR in ${{ github.event.repository.name }}"
+
+  dev-deployment:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest  
+    environment: 
+      name: dev
+    needs: result-pr  
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Deploy
+      run: echo "Running Terraform Apply..."
+
+  ws-deployment:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest  
+    environment: 
+      name: dev01
+    needs: result-pr
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Deploy
+      run: echo "Running Terraform Apply... in dev01"      

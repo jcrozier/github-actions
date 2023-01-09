@@ -1,0 +1,83 @@
+name: Application Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_version:
+        required: false
+        type: number
+
+env:
+  PROJECT: DVSA Recallss
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:   
+  dev-deployment:   
+    # The type of runner that the job will run on
+    uses: ./.github/workflows/terraform-env-deploy.yml
+    with:
+      env_deploy: dev
+
+  dev-qa:    
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: dev
+    needs: dev-deployment
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run QA
+      run: echo "Run workflow for QA"       
+
+  int-deployment:   
+    # The type of runner that the job will run on
+    uses: ./.github/workflows/terraform-env-deploy.yml
+    with:
+      env_deploy: int
+    needs: dev-deployment
+
+  int-qa:    
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: int
+    needs: int-deployment
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run QA
+      run: echo "Run workflow for QA"   
+ 
+  preprod-deployment:   
+    # The type of runner that the job will run on
+    uses: ./.github/workflows/terraform-env-deploy.yml
+    with:
+      env_deploy: preprod
+    needs: artifact-promtion  
+
+    int-qa:    
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: preprod
+    needs: preprod-deployment
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run QA
+      run: echo "Run workflow for QA"     
+
+  prod-deployment:   
+    # The type of runner that the job will run on
+    uses: ./.github/workflows/app-env-deploy.yml
+    with:
+      env_deploy: prod
+    needs: preprod-deployment   
+

@@ -1,0 +1,88 @@
+name: Terraform Setup/Plan/Apply
+
+on:
+  workflow_call:
+    inputs:
+      env_deploy:
+        description: List of environment variables to set up, given in env=value format.
+        required: false
+        type: string  
+
+env:
+  PROJECT: DVSA Recalls
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  tf-fmt:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ inputs.env_deploy }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run Terraoform FMT
+      run: echo "Formating check..."
+
+ 
+  tf-fmt:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ inputs.env_deploy }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run Terraoform FMT
+      run: echo "Formating check..."
+
+  synk:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ inputs.env_deploy }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run synk against codebase
+      run: echo "Checking ${{ github.event.repository.name }}"
+    
+    - name: Create dummy synk results
+      run: echo "Upload synk results" >> ./synk.txt
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: synk-artifact
+        path: ./synk.txt      
+
+  tf-plan:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ inputs.env_deploy }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run Terraoform plan
+      run: echo "Planning..."   
+
+    - name: Create dummy plan
+      run: echo "Upload plan results" >> ./tf.txt
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: tf-artifact
+        path: ./tf.txt              
