@@ -21,7 +21,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: jcrozier/github-actions/blob/main/.github/workflows/app-env-deploy.yml
+    - uses: jcrozier/github-actions/blob/main/.github/workflows/app-env-deploy.yml@main
     
     - name: Deploying
       run: echo "Deploying project from ${{ github.event.repository.name }} for $PROJECT"
