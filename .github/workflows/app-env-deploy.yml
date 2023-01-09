@@ -24,8 +24,10 @@ jobs:
     - name: Set environment variables
       if: ${{ inputs.env_deploy }}
       run: |
-        echo "test=dev" >> $GITHUB_ENV
-        echo "${{ env.test }}"
+        echo "DEPLOY_ENV=${{ inputs.env_deploy }}" >> $GITHUB_ENV
+    - name: List environment variables
+      if: ${{ inputs.env_deploy }}
+      run: echo "Deploy env is $DEPLOY_ENV"
 
   deploy-application:   
     # The type of runner that the job will run on
