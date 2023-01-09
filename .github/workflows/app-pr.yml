@@ -1,0 +1,155 @@
+name: Application Pull Request
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+env:
+  PROJECT: DVSA Recalls
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  code-linter:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: dev
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run Code Linter against codebase
+      run: echo "Linting ${{ github.event.repository.name }}"
+    
+    - name: Create dummy linter results
+      run: echo "Upload linter results" >> ./linter.txt
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: linter-artifact
+        path: ./linter.txt  
+
+  synk:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: dev
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run synk against codebase
+      run: echo "Linting ${{ github.event.repository.name }}"
+    
+    - name: Create dummy synk results
+      run: echo "Upload synk results" >> ./synk.txt
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: synk-artifact
+        path: ./synk.txt
+
+  build:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: dev
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Setup
+      run: echo "Setup ${{ github.event.repository.name }}"
+     
+    - name: Build
+      run: echo "Building in ${{ github.event.repository.name }}"
+
+    - name: Artifact
+      run: echo "Upload artifact from ${{ github.event.repository.name }}" >> ./build-artifact.txt
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: build-artifact
+        path: ./build-artifact.txt
+
+  tag-w-sha:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: dev
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Tag
+      run: echo "Tag ${{ github.event.repository.name }}"
+
+    - name: Artifact
+      run: echo "Upload tagged artifact from ${{ github.event.repository.name }}" >> ./tagged-artifact.txt
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: tagged-artifact
+        path: ./tagged-artifact.txt
+
+  result-pr:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: dev
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:    
+    - name: Report Result to PR
+      run: echo "Result publish to PR in ${{ github.event.repository.name }}"
+
+
+  upload-to-s3:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: dev
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:    
+    - name: Upload to S3
+      run: echo "Upload complete"     
+
+  dev-deployment:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest  
+    environment: 
+      name: dev
+    needs: build  
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Deploy
+      run: echo "Deploying project from ${{ github.event.repository.name }} for $PROJECT"
+
+  ws-deployment:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest  
+    environment: 
+      name: dev01
+    needs: build  
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Deploy
+      run: echo "Deploying project from ${{ github.event.repository.name }} for $PROJECT in dev01"      

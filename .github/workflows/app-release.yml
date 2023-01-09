@@ -1,0 +1,27 @@
+name: Application Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_version:
+        required: false
+        type: number
+
+env:
+  PROJECT: DVSA Recalls
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:   
+  dev-deployment:   
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest  
+    environment: 
+      name: dev
+    needs: build  
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - uses: jcrozier/github-actions/blob/main/.github/workflows/app-env-deploy.yml
+    
+    - name: Deploying
+      run: echo "Deploying project from ${{ github.event.repository.name }} for $PROJECT"
