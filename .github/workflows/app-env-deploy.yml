@@ -2,6 +2,11 @@ name: Application Env Deploy
 
 on:
   workflow_call:
+    inputs:
+      env_vars:
+        description: List of environment variables to set up, given in env=value format.
+        required: false
+        type: string  
 
 env:
   PROJECT: DVSA Recalls
@@ -13,10 +18,17 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     environment: 
-      name: dev
+      name: ${{ inputs.env_vars }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: Set environment variables
+      if: ${{ inputs.env_vars }}
+      run: |
+        for i in "${{ inputs.env_vars }}"
+        do
+          printf "%s\n" $i >> $GITHUB_ENV
+        done
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v3
     
