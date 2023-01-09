@@ -26,10 +26,7 @@ jobs:
     - name: Set environment variables
       if: ${{ inputs.env_deploy }}
       run: |
-        for i in "${{ inputs.env_deploy }}"
-        do
-          printf "%s\n" $i >> $GITHUB_ENV
-        done
+        printf "${{ inputs.env_deploy }}" >> $GITHUB_ENV
         echo $GITHUB_ENV
 
   deploy-application:   
