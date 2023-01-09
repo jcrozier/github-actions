@@ -12,12 +12,11 @@ env:
 jobs:
     # This workflow contains a single job called "build"
     code-linter:
-      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
         name: dev
-
+      if: github.event.pull_request.merged == 'true'
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -35,12 +34,11 @@ jobs:
           path: ./linter.txt  
 
     synk:   
-      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
         name: dev
-
+      if: github.event.pull_request.merged == 'true'
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -58,11 +56,11 @@ jobs:
           path: ./synk.txt
 
     build:   
-      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
         name: dev
+      if: github.event.pull_request.merged == 'true'
 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
@@ -84,11 +82,11 @@ jobs:
           path: ./build-artifact.txt
 
     tag-w-sha:   
-      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
         name: dev
+      if: github.event.pull_request.merged == 'true'
 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
@@ -107,11 +105,11 @@ jobs:
           path: ./tagged-artifact.txt
 
     result-pr:   
-      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
         name: dev
+      if: github.event.pull_request.merged == 'true'
 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:    
@@ -119,11 +117,11 @@ jobs:
         run: echo "Result publish to PR in ${{ github.event.repository.name }}"       
 
     upload-to-s3:   
-      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
         name: dev
+      if: github.event.pull_request.merged == 'true'
 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:    
@@ -131,11 +129,11 @@ jobs:
         run: echo "Upload complete"     
 
     dev-deployment:   
-      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
-      runs-on: ubuntu-latest  
+      runs-on: ubuntu-latest
       environment: 
         name: dev
+      if: github.event.pull_request.merged == 'true'
       needs: build  
 
       # Steps represent a sequence of tasks that will be executed as part of the job
@@ -147,11 +145,11 @@ jobs:
         run: echo "Deploying project from ${{ github.event.repository.name }} for $PROJECT"
 
     ws-deployment:   
-      if: github.event.pull_request.merged == 'true'
       # The type of runner that the job will run on
-      runs-on: ubuntu-latest  
+      runs-on: ubuntu-latest
       environment: 
         name: dev01
+      if: github.event.pull_request.merged == 'true'
       needs: build  
 
       # Steps represent a sequence of tasks that will be executed as part of the job
