@@ -14,27 +14,11 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-
-  setup:   
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    - name: Set environment variables
-      if: ${{ inputs.env_deploy }}
-      run: |
-        echo "DEPLOY_ENV=${{ inputs.env_deploy }}" >> $GITHUB_ENV
-    - name: List environment variables
-      if: ${{ inputs.env_deploy }}
-      run: echo "Deploy env is $DEPLOY_ENV"
-
   deploy-application:   
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     environment: 
       name: ${{ inputs.env_deploy }}
-    needs: setup
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
