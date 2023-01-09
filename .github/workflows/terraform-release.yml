@@ -1,4 +1,4 @@
-name: Application Release
+name: Terraform Release
 
 on:
   workflow_dispatch:
