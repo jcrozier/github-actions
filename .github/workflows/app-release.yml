@@ -14,7 +14,8 @@ env:
 jobs:   
   dev-deployment:   
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest 
+    uses: jcrozier/github-actions/blob/main/.github/workflows/app-env-deploy.yml@main 
     environment: 
       name: dev
 
@@ -22,8 +23,6 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v3
-
-    - uses: jcrozier/github-actions/blob/main/.github/workflows/app-env-deploy.yml@main
     
     - name: Deploying
       run: echo "Deploying project from ${{ github.event.repository.name }} for $PROJECT"
