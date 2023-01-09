@@ -39,6 +39,7 @@ jobs:
       environment: 
         name: dev
       if: github.event.pull_request.merged == 'true'
+      needs: code-linter
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -61,7 +62,7 @@ jobs:
       environment: 
         name: dev
       if: github.event.pull_request.merged == 'true'
-
+      needs: synk
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -87,7 +88,7 @@ jobs:
       environment: 
         name: dev
       if: github.event.pull_request.merged == 'true'
-
+      needs: uild
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -110,7 +111,7 @@ jobs:
       environment: 
         name: dev
       if: github.event.pull_request.merged == 'true'
-
+      needs: tag-w-sha
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:    
       - name: Report Result to PR
@@ -122,7 +123,7 @@ jobs:
       environment: 
         name: dev
       if: github.event.pull_request.merged == 'true'
-
+      needs: result-pr 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:    
       - name: Upload to S3
@@ -134,7 +135,7 @@ jobs:
       environment: 
         name: dev
       if: github.event.pull_request.merged == 'true'
-      needs: build  
+      needs: upload-to-s3  
 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
@@ -150,7 +151,7 @@ jobs:
       environment: 
         name: dev01
       if: github.event.pull_request.merged == 'true'
-      needs: build  
+      needs: upload-to-s3  
 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
