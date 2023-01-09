@@ -76,7 +76,7 @@ jobs:
 
   prod-deployment:   
     # The type of runner that the job will run on
-    uses: ./.github/workflows/app-env-deploy.yml
+    uses: ./.github/workflows/terraform-env-deploy.yml
     with:
       env_deploy: prod
     needs: preprod-qa   
