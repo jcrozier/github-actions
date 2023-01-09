@@ -16,4 +16,4 @@ jobs:
     # The type of runner that the job will run on
     uses: ./.github/workflows/app-env-deploy.yml
     with:
-      env_deploy: dev
+      env_deploy: "dev"
