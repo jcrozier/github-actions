@@ -23,14 +23,29 @@ jobs:
     uses: ./.github/workflows/app-env-deploy.yml
     with:
       env_deploy: int
-    needs: dev-deployment   
+    needs: dev-deployment
+
+ 
+  artifact-promtion:    
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: promotion
+    needs: int-deployment
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run artifact promtion
+      run: echo "Promotion from non prod to prod account S3 bucker" 
 
   preprod-deployment:   
     # The type of runner that the job will run on
     uses: ./.github/workflows/app-env-deploy.yml
     with:
       env_deploy: preprod
-    needs: int-deployment   
+    needs: artifact-promtion  
 
   prod-deployment:   
     # The type of runner that the job will run on
