@@ -28,20 +28,6 @@ jobs:
     - name: Run Terraoform FMT
       run: echo "Formating check..."
 
- 
-  tf-fmt:   
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    environment: 
-      name: ${{ inputs.env_deploy }}
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v3
-    
-    - name: Run Terraoform FMT
-      run: echo "Formating check..."
 
   synk:   
     # The type of runner that the job will run on
