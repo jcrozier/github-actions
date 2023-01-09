@@ -79,5 +79,5 @@ jobs:
     uses: ./.github/workflows/app-env-deploy.yml
     with:
       env_deploy: prod
-    needs: preprod-deployment   
+    needs: preprod-qa   
 
