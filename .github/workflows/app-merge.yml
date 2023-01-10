@@ -82,36 +82,13 @@ jobs:
           name: build-artifact
           path: ./build-artifact.txt
 
-    tag-w-sha:   
-      # The type of runner that the job will run on
-      runs-on: ubuntu-latest
-      environment: 
-        name: dev
-      if: github.event.pull_request.merged == true
-      needs: build
-      # Steps represent a sequence of tasks that will be executed as part of the job
-      steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      
-      - name: Tag
-        run: echo "Tag ${{ github.event.repository.name }}"
-
-      - name: Artifact
-        run: echo "Upload tagged artifact from ${{ github.event.repository.name }}" >> ./tagged-artifact.txt
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: tagged-artifact
-          path: ./tagged-artifact.txt
-
     result-pr:   
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       environment: 
         name: dev
       if: github.event.pull_request.merged == true
-      needs: tag-w-sha
+      needs: build
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:    
       - name: Report Result to PR

@@ -1,0 +1,29 @@
+name: Application Versioning
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_version:
+        required: false
+        type: number
+      app_artifact:
+        required: false
+        type: string        
+
+env:
+  PROJECT: DVSA Recallss
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:    
+  artifact-version:    
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 
+      name: versioning
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    
+    - name: Run artifact version
+      run: echo "Versioning artifact to Version x.x.x." 
