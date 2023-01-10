@@ -3,12 +3,9 @@ name: Terraform Versioning
 on:
   workflow_dispatch:
     inputs:
-      app_version:
+      terraform_version:
         required: false
-        type: number
-      app_artifact:
-        required: false
-        type: string        
+        type: number   
 
 env:
   PROJECT: DVSA Recallss
