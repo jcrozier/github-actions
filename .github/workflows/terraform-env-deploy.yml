@@ -95,10 +95,3 @@ jobs:
     
     - name: Run Terraoform plan
       run: echo "Applying..."   
-
-
-
-
-- uses: hashicorp/setup-terraform@v2
-  with:
-    terraform_version: 1.1.7
