@@ -38,10 +38,10 @@ jobs:
           
           # OPTIONAL
           # Set each property of the row to a variable
-          name=$(_jq '.name')
+          app=$(_jq '.app')
           value=$(_jq '.value')
 
           # Utilize your variables
-          echo "$name = $value"
+          echo "$app = $value"
         done
 
