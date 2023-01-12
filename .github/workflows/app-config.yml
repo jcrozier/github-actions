@@ -30,7 +30,7 @@ jobs:
 
     - name: List config
       run: |
-        jsonData="${{ inputs.env_config }}"
+        jsonData='[{"app":"app1","value":"1.1.1"},{"app":"app1","value":"1.1.1"},{"app":"app3","value":"3.3.3"}]'
         for row in $(echo "${jsonData}" | jq -r '.[] | @base64'); do
           _jq() {
             echo "${row}" | base64 --decode | jq -r "${1}"
