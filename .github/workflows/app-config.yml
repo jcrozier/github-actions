@@ -30,7 +30,7 @@ jobs:
 
     - name: List config
       run: |
-        jq --raw-output 'map([.app, .value])[] | @tsv' |
+        echo "${{ inputs.env_config }}" | jq --raw-output 'map([.app, .value])[] | @tsv' |
         while IFS=$'\t' read app value; do
             echo "$app = $value"
         done
