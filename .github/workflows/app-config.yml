@@ -30,9 +30,17 @@ jobs:
 
     - name: List config
       run: |
-        echo "${{ inputs.env_config }}" | jq --raw-output 'map([.app, .value])[] | @tsv' |
-        while IFS=$'\t' read app value; do
-            echo "$app = $value"
+        for row in $(echo "${{ inputs.env_config }}" | jq -r '.[] | @base64'); do
+          _jq() {
+          echo "${row}" | base64 --decode | jq -r "${1}"
+          }
+
+          # Set each property of the row to a variable
+          app=$(_jq '.app')
+          value=$(_jq '.value')
+
+          # Utilize your variables
+          echo "$app = $value"
         done
 
       
