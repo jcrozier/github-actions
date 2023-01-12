@@ -1,4 +1,4 @@
-name: Application config
+name: Application Config
 
 on:
   workflow_dispatch:
@@ -25,5 +25,14 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v3
     
-    - name: Running QA
+    - name: echo config
       run: echo "${{ inputs.env_config }}"
+
+    - name: List config
+      run: |
+        jq --raw-output 'map([.app, .value])[] | @tsv' |
+        while IFS=$'\t' read app value; do
+            echo "$app = $value"
+        done
+
+      
