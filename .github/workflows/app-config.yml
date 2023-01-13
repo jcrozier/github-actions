@@ -10,7 +10,6 @@ on:
 
 env:
   PROJECT: DVSA Recalls
-  APP_TEST: ${{ env.APP_REPO }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -47,4 +46,4 @@ jobs:
         done
 
     - name: List config from UI
-      run: echo "$APP_TEST"
+      run: echo "${{ vars.APP_REPO }}"
