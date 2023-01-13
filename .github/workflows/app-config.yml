@@ -28,7 +28,7 @@ jobs:
     - name: echo config
       run: echo "${{ inputs.env_config }}"
 
-    - name: List config
+    - name: List config from UI
       run: |
         jsonData='${{ inputs.env_config }}'
         for row in $(echo "${jsonData}" | jq -r '.[] | @base64'); do
@@ -45,3 +45,5 @@ jobs:
           echo "$app = $value"
         done
 
+    - name: List config from UI
+      run: echo "$APP_REPO"
