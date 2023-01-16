@@ -6,7 +6,13 @@ on:
       env_config:
         description: JSON of app versions.
         required: false
-        type: string  
+        type: string
+      app_name:
+        type: choice
+        description: Which app to release?
+        options: 
+        - app1
+        - app2 
 
 env:
   PROJECT: DVSA Recalls
