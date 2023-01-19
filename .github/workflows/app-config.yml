@@ -45,10 +45,23 @@ jobs:
           # OPTIONAL
           # Set each property of the row to a variable
           app=$(_jq '.app')
-          value=$(_jq '.value')
+          dev=$(_jq '.dev')
+          int=$(_jq '.int')
+          preprod=$(_jq '.preprod')
+          prod=$(_jq '.prod')
 
           # Utilize your variables
-          echo "$app = $value"
+          echo "Dev versions"
+          echo "$app = $dev"
+
+          echo "Int versions"
+          echo "$app = $int"
+
+          echo "Preprod versions"
+          echo "$app = $preprod"
+
+          echo "Prod versions"
+          echo "$app = $prod"
         done
 
     - name: List config from UI
