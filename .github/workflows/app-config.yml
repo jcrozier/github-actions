@@ -52,16 +52,16 @@ jobs:
 
           # Utilize your variables
           echo "Dev versions"
-          echo "$app = $dev"
+          echo "$app = $dev" > dev.txt
 
           echo "Int versions"
-          echo "$app = $int"
+          echo "$app = $int" > int.txt
 
           echo "Preprod versions"
-          echo "$app = $preprod"
+          echo "$app = $preprod" > preprod.txt
 
           echo "Prod versions"
-          echo "$app = $prod"
+          echo "$app = $prod" > prod.txt
         done
 
     - name: List config from UI
