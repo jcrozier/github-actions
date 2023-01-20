@@ -9,10 +9,16 @@ on:
         type: string
       app_name:
         type: choice
-        description: Which app to release?
+        description: Which env to release?
         options: 
-        - app1
-        - app2 
+        - dev
+        - int
+        - preprod
+        - prod
+      dev_ws_name:
+        description: name of dev workspace e.g dev01 or dev-jc.
+        required: false
+        type: string       
 
 env:
   PROJECT: DVSA Recalls
@@ -51,20 +57,13 @@ jobs:
           prod=$(_jq '.prod')
 
           # Utilize your variables
-          echo "Dev versions"
           echo "$app = $dev" > dev.txt
-
-          echo "Int versions"
           echo "$app = $int" > int.txt
-
-          echo "Preprod versions"
           echo "$app = $preprod" > preprod.txt
-
-          echo "Prod versions"
           echo "$app = $prod" > prod.txt
         done
 
     - uses: actions/upload-artifact@v3
       with:
         name: versions-artifact
-        path: ./dev.txt
+        path: ./*.txt
